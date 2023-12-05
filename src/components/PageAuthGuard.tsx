@@ -10,12 +10,12 @@ export default function PageAuthGuard({ children }: { children: React.ReactNode 
   const pathname = usePathname();
   const user = useRecoilValue(userState);
   const authRequiredPaths = ['/'];
-  const authNotRequiredPaths = ['/login'];
+  const authNotRequiredPaths = ['/signIn'];
 
   const redirectToLogin = () => {
     authRequiredPaths.forEach((authRequiredPath) => {
       if (pathname.startsWith(authRequiredPath)) {
-        router.push('/login');
+        router.push('/signIn');
       }
     });
   };
