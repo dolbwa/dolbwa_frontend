@@ -13,26 +13,27 @@ export default function PageAuthGuard({ children }: { children: React.ReactNode 
   const authNotRequiredPaths = ['/signIn'];
 
   const redirectToLogin = () => {
-    authRequiredPaths.forEach((authRequiredPath) => {
-      if (pathname.startsWith(authRequiredPath)) {
-        router.push('/signIn');
-      }
-    });
+    const isAuthRequired = authRequiredPaths.some((path) => pathname.startsWith(path));
+    if (isAuthRequired) {
+      router.push('/signIn');
+      // toast.error('로그인을 해주세요.', {
+      //   autoClose: 4000,
+      //   theme: 'dark',
+      //   position: toast.POSITION.BOTTOM_CENTER,
+      // });
+    }
   };
 
   const redirectToHome = () => {
-    authNotRequiredPaths.forEach((authNotRequiredPath) => {
-      if (pathname.startsWith(authNotRequiredPath)) {
-        router.push('/');
-      }
-    });
+    const isAuthNotRequired = authNotRequiredPaths.some((path) => pathname.startsWith(path));
+    if (isAuthNotRequired) {
+      router.push('/');
+    }
   };
 
   useEffectAfterMount(() => {
-    if (router && pathname) {
-      user.isAuth ? redirectToHome() : redirectToLogin();
-    }
-  }, [router, pathname, user.isAuth]);
+    user.isAuth ? redirectToHome() : redirectToLogin();
+  }, [user]);
 
   return <>{children}</>;
 }

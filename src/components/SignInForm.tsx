@@ -34,9 +34,11 @@ export default function SignInForm() {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setloadingState(true);
-    await pushVerificationCode('01090011211');
+    const res = await pushVerificationCode('01090011211');
     setloadingState(false);
-    setIsSubmitVerificationCode(true);
+    if (res) {
+      setIsSubmitVerificationCode(true);
+    }
   };
 
   return (

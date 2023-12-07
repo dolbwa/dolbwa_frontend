@@ -1,8 +1,12 @@
 import { atom } from 'recoil';
 
-export const userState = atom({
+interface UserStateType {
+  isAuth?: boolean;
+}
+
+export const userState = atom<UserStateType>({
   key: 'userState',
   default: {
-    isAuth: false,
+    // 인증 성공시 isAuth값 넣어줘야 함  // isAuth: false,
   },
 });
